@@ -3,6 +3,9 @@
 This is a repository to store the WIP for a future application that at the very least make browsing the **[WFMU](https://www.wfmu.org/playlists/)** archives much easier. 
 
 # Examples
+## Station - [Example Page](https://www.wfmu.org/playlists)
+*this information is parsed from the HTML of URL for the 'Example Page' and collects all the show information into lists that are keyed by day of the week (still need to add the `Show` construction into this class)*
+This is an object that is created to hold the whole of information about a radio station. Currently this only works on pages that are formatted like WFMU but hopefully I can create parsers for more station websites eventually.
 ## Playlists - [Example Page](https://www.wfmu.org/playlists/WA) - unrelated to output below
 * Note: while working on this I realize that the name 'Playlist' doesn't accurately represent what this object functions as. Instead of a traditional playlist that has things like track info and timing this is more like a list of archived broadcasts that you can listen to at any time.*
 In order to create a Playlist object you must pass the html retrieved from a GET request (locally just using curl and redirecting to an output file) and pass that text into the Playlist constructor and then access the `broadcasts` field of the Playlist object and you'll be able to see info about all the broadcasts listed on the HTML that was passed in.
@@ -91,109 +94,144 @@ In order to create a Playlist object you must pass the html retrieved from a GET
 *These are indidividual instances of a specific radio program. You could also think of them as 'episodes' of a radio program*
 More used as a helper class to create objects that the 'Playlist' class uses to keep things organized. 
 
-## Show - [Example Page](https://www.wfmu.org/playlists/)
-*This started as something else and then my curiosity moved faster than my planning brain*
-Currently the show constructor is making an object that is much closer to an index of radio programs on the station but the current name doesn't communicate that at all. Here is the current output for constructing a Show object and then accessing the property `shows`
-```json
-{
-  "Monday": [
-    [
-      "Wake",
-      "with Clay Pigeon",
-      "/playlists/WA",
-      "/archivefeed/mp3/WA.xml",
-      "/playlistfeed/WA.xml",
-      "/flashplayer.php?version=3&amp;show=80930&amp;archive=164962",
-      "/playlists/shows/80930"
-    ],
-    [
-      "Surface Noise",
-      "with Joe McGasko",
-      "/playlists/SN",
-      "/archivefeed/mp3/SN.xml",
-      "/playlistfeed/SN.xml",
-      "/flashplayer.php?version=3&amp;show=55373&amp;archive=96277",
-      "/playlists/shows/55373"
-    ],
-    [
-      "Three Chord Monte",
-      "with Joe Belock",
-      "/playlists/TM",
-      "/archivefeed/mp3/TM.xml",
-      "/playlistfeed/TM.xml",
-      "/flashplayer.php?version=3&amp;show=55349&amp;archive=96224",
-      "/playlists/shows/55349"
-    ],
-    [
-      "Jim Price",
-      "/playlists/JP",
-      "/archivefeed/mp3/JP.xml",
-      "/playlistfeed/JP.xml",
-      "/flashplayer.php?version=3&amp;show=69792&amp;archive=146240",
-      "/playlists/shows/69792"
-    ],
-    [
-      "Radio Ravioli",
-      "with Olivia",
-      "/playlists/OB",
-      "/archivefeed/mp3/OB.xml",
-      "/playlistfeed/OB.xml",
-      "/flashplayer.php?version=3&amp;show=95267&amp;archive=189338",
-      "/playlists/shows/95267"
-    ],
-    [
-      "Techtonic",
-      "with Mark Hurst",
-      "/playlists/TD",
-      "/archivefeed/mp3/TD.xml",
-      "/playlistfeed/TD.xml",
-      "/flashplayer.php?version=3&amp;show=112493&amp;archive=213903",
-      "/playlists/shows/112493"
-    ],
-    [
-      "It's Complicated",
-      "with Dave Mandl",
-      "/playlists/GX",
-      "/archivefeed/mp3/GX.xml",
-      "/playlistfeed/GX.xml",
-      "/flashplayer.php?version=3&amp;show=120983&amp;archive=225793",
-      "/playlists/shows/120983"
-    ],
-    [
-      "Bad Animals",
-      "with Jim the Poet and Amanda",
-      "/playlists/B1",
-      "/archivefeed/mp3/B1.xml",
-      "/playlistfeed/B1.xml"
-    ],
-    [
-      "Daniel Blumin",
-      "/playlists/DN",
-      "/archivefeed/mp3/DN.xml",
-      "/playlistfeed/DN.xml",
-      "/flashplayer.php?version=3&amp;show=54091&amp;archive=93861",
-      "/playlists/shows/54091"
-    ],
-    [
-      "Travel Zone",
-      "with DJ Time Traveler",
-      "/playlists/CK",
-      "/archivefeed/mp3/CK.xml",
-      "/playlistfeed/CK.xml",
-      "/flashplayer.php?version=3&amp;show=80929&amp;archive=164960",
-      "/playlists/shows/80929"
-    ],
-    [
-      "Polyglot",
-      "with Jesse Dorris",
-      "/playlists/PX",
-      "/archivefeed/mp3/PX.xml",
-      "/playlistfeed/PX.xml",
-      "/flashplayer.php?version=3&amp;show=80236&amp;archive=163905",
-      "/playlists/shows/80236"
-    ]
-  ], etc....
+## Show
+Show starts as a class that holds the basic information of the radio show but will eventually become what holds the `BROADCASTS` that are located at the relative URL found in the `archives` field
+
+```
+SHOWS ON MONDAY
+Show {
+  _title: "Wake",
+  _dj: "Clay Pigeon",
+  _feeds: [ "/archivefeed/mp3/WA.xml", "/playlistfeed/WA.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=80930&amp;archive=164962",
+  _archives: "/playlists/WA",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
 }
+Show {
+      _title: "Surface Noise",
+  _dj: "Joe McGasko",
+  _feeds: [ "/archivefeed/mp3/SN.xml", "/playlistfeed/SN.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=55373&amp;archive=96277",
+  _archives: "/playlists/SN",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+Show {
+      _title: "Three Chord Monte",
+  _dj: "Joe Belock",
+  _feeds: [ "/archivefeed/mp3/TM.xml", "/playlistfeed/TM.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=55349&amp;archive=96224",
+  _archives: "/playlists/TM",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+Show {
+      _title: "Jim Price",
+  _dj: "Jim Price",
+  _feeds: [ "/archivefeed/mp3/JP.xml", "/playlistfeed/JP.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=69792&amp;archive=146240",
+  _archives: "/playlists/JP",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+Show {
+      _title: "Radio Ravioli",
+  _dj: "Olivia",
+  _feeds: [ "/archivefeed/mp3/OB.xml", "/playlistfeed/OB.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=95267&amp;archive=189338",
+  _archives: "/playlists/OB",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+Show {
+      _title: "Techtonic",
+  _dj: "Mark Hurst",
+  _feeds: [ "/archivefeed/mp3/TD.xml", "/playlistfeed/TD.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=112493&amp;archive=213903",
+  _archives: "/playlists/TD",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+Show {
+      _title: "It's Complicated",
+  _dj: "Dave Mandl",
+  _feeds: [ "/archivefeed/mp3/GX.xml", "/playlistfeed/GX.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=120983&amp;archive=225793",
+  _archives: "/playlists/GX",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+Show {
+      _title: "Bad Animals",
+  _dj: "Jim the Poet and Amanda",
+  _feeds: [ "/archivefeed/mp3/B1.xml", "/playlistfeed/B1.xml" ],
+  _sampleShow: undefined,
+  _archives: "/playlists/B1",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+Show {
+      _title: "Daniel Blumin",
+  _dj: "Daniel Blumin",
+  _feeds: [ "/archivefeed/mp3/DN.xml", "/playlistfeed/DN.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=54091&amp;archive=93861",
+  _archives: "/playlists/DN",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+Show {
+      _title: "Travel Zone",
+  _dj: "DJ Time Traveler",
+  _feeds: [ "/archivefeed/mp3/CK.xml", "/playlistfeed/CK.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=80929&amp;archive=164960",
+  _archives: "/playlists/CK",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+Show {
+      _title: "Polyglot",
+  _dj: "Jesse Dorris",
+  _feeds: [ "/archivefeed/mp3/PX.xml", "/playlistfeed/PX.xml" ],
+  _sampleShow: "/flashplayer.php?version=3&amp;show=80236&amp;archive=163905",
+  _archives: "/playlists/PX",
+  title: [Getter],
+  dj: [Getter],
+  feeds: [Getter],
+  sampleShow: [Getter],
+  archives: [Getter],
+}
+
 ```
 # Useful Links
 - [Bun](https://bun.sh/)
@@ -203,9 +241,9 @@ Currently the show constructor is making an object that is much closer to an ind
 
 # TODO (a non exhaustive list of things to work on)
 - rename 'Playlist' to something more accurate (archive?)
-- rename 'Show' to something more accurate
-    - this one is a little complicated because right now the Show class constructs an object of multiple 'shows' that will eventually hold info like title, dj, airing time, etc. maybe something along the lines of ShowIndex or StationPrograms.
-- make `Show` more like `Broadcast` where it stores the values in proper fields so they can be accessed later
+- ~~rename 'Show' to something more accurate
+    - this one is a little complicated because right now the Show class constructs an object of multiple 'shows' that will eventually hold info like title, dj, airing time, etc. maybe something along the lines of ShowIndex or StationPrograms.~~
+- ~~make `Show` more like `Broadcast` where it stores the values in proper fields so they can be accessed later~~
 - figure out actual audio streaming from the url sources
 - fix `type` imports (look more into tsconfig)
 
