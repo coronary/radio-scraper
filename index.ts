@@ -1,7 +1,12 @@
-import { Show } from '~types/Show'
+import { ScheduleCategory } from '~types/Schedules';
+import { Station } from '~types/Station';
+import { Show } from '~types/Show';
 
 const schedule = await Bun.file("./examples/listIndex/archive.html").text()
 
-const idkMan = new Show(schedule);
+const station = new Station(schedule);
 
-console.log(JSON.stringify(idkMan.shows))
+const shows = station.scheduleByCategory(ScheduleCategory.MONDAY).map( showArr => new Show(showArr))
+
+shows.forEach( show => console.log(show.title, show.archives))
+

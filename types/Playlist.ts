@@ -19,7 +19,7 @@ export class Playlist {
 	constructor(htmlText: string) {
 		const rewriter = new HTMLRewriter()
 
-		const localBCs: Array<Array<String | moment.Moment>> = []
+		const localBCs: Array<Array<string | moment.Moment>> = []
 		let lastBroadcastIndex = -1
 
 		rewriter.on(getSelector(), {

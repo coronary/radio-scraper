@@ -6,7 +6,15 @@ export class Broadcast {
 	streamUrls: Array<string>;
 	playlistUrl?: string;
 
-	constructor(showArr: Array<string>) {
+	private function getStreamUrl(url: string): string {
+		if (url.includes('flashplayer')) {
+			return url
+		} else if (url.includes('/listen')) {
+			return url
+		}
+	}
+
+	constructor(showArr: Array<string | moment.Moment>) {
 		this.streamUrls = []
 		if (showArr)
 		showArr.forEach((item) => {
