@@ -247,6 +247,9 @@ Show {
 - figure out actual audio streaming from the url sources
 - fix `type` imports (look more into tsconfig)
 
+# Ideas
+- make player CLI using [awedio](https://crates.io/crates/awedio)
+
 # Helpful things I found while working on this
 - [Selecting nested elements](https://stackoverflow.com/questions/68114819/access-nested-elements-in-htmlrewriter-cloudflare-workers)
     - basically the `on` functions for HTMLRewriter are executed sequentially so the easiest way to get nested items is to keep chaining `on` functions and making the selector progressively more focused

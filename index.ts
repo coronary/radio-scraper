@@ -3,10 +3,14 @@ import { Station } from '~types/Station';
 import { Show } from '~types/Show';
 
 const schedule = await Bun.file("./examples/listIndex/archive.html").text()
+const wfmuUrl = "https://wfmu.org"
 
 const station = new Station(schedule);
 
-const shows = station.scheduleByCategory(ScheduleCategory.MONDAY).map( showArr => new Show(showArr))
+const shows = station.scheduleByCategory(ScheduleCategory.TUESDAY).map( showArr => new Show(showArr, wfmuUrl))
 
-shows.forEach( show => console.log(show.title, show.archives))
+console.log(`shows on ${ ScheduleCategory.TUESDAY }`.toUpperCase())
+shows.forEach( ( show ) => {
+	console.log(show)
+})
 

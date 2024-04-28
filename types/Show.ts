@@ -24,7 +24,9 @@ export class Show {
 		return this._archives
 	}
 
-	constructor(showArr: string[]) {
+
+	constructor(showArr: string[], baseUrl: string = "") {
+		const urlString = (pathStr: string): string => (baseUrl + pathStr)
 		this._feeds = []
 		const djReg = /with/i
 		const feedReg = /feed\/.*\.xml/i
@@ -35,11 +37,16 @@ export class Show {
 			} else if (djReg.test( currentItem )) {
 				this._dj = currentItem.split('with ')[1]
 			} else if (feedReg.test(currentItem)) {
-				this._feeds.push(currentItem)
+				this._feeds.push(urlString(currentItem))
 			} else if (/flashplayer/i.test(currentItem)) {
-				this._sampleShow = currentItem
+				const playerURL = (url: string) => {
+					const showNo = url.match(/show=\d+/i)?.[0]
+					const archiveNo = url.match(/archive=\d+/i)?.[0]
+					return showNo && archiveNo ?  `/archiveplayer/?${showNo}&${archiveNo}`: currentItem
+				}
+				this._sampleShow = urlString(playerURL(currentItem))
 			} else if (/\/playlists\/[A-Z1-9]+\d?$|http/i.test(currentItem)) {
-				this._archives = currentItem
+				this._archives = urlString(currentItem)
 			}
 		}
 		if (!this._dj) {
